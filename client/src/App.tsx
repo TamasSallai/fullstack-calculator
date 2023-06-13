@@ -8,11 +8,21 @@ type ResultData = {
 const App = () => {
   const [result, setResult] = useState<string>('')
 
-  const handleFetchResult = async () => {
+  const getResult = async () => {
     const response = await fetch('api/result')
     const data = (await response.json()) as ResultData
     //The response should be guarded instead of type assertion
     if (data.result) setResult(data.result)
+  }
+
+  const postResult = async () => {
+    await fetch('api/result', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ result }),
+    })
   }
 
   return (
@@ -22,8 +32,8 @@ const App = () => {
         value={result}
         onChange={(e) => setResult(e.target.value)}
       />
-      <button>Save result</button>
-      <button onClick={handleFetchResult}>Get last result</button>
+      <button onClick={postResult}>Save result</button>
+      <button onClick={getResult}>Get last result</button>
     </div>
   )
 }
