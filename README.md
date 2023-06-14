@@ -1,5 +1,7 @@
 # fullstack-calculator
 
+This repo is for a calculator app, with both backend and frontend code. The frontend is writen in React and using Vite as the bundler / development tool. The backend is using NodeJS/ExpressJS.
+
 ## Table of Contents
 
 1. [Installation](#installation)
