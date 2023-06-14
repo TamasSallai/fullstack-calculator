@@ -1,5 +1,7 @@
+import { log } from 'console'
 import express from 'express'
 import fs from 'fs'
+import path from 'path'
 
 const app = express()
 app.use(express.json())
@@ -9,12 +11,12 @@ app.get('/api', (req, res) => {
 })
 
 app.get('/api/result', (req, res) => {
-  fs.readFile('./data/result.json', (err, data) => {
+  fs.readFile('./data/calculator.json', (err, data) => {
     if (err) {
       if (err.code === 'ENOENT') {
-        return res.status(404).send({ error: 'No such file or directory. :(' })
+        return res.status(404).send({ error: 'No such file or directory.' })
       }
-      return res.status(500).send({ error: 'Internal server error. :(' })
+      return res.status(500).send({ error: 'Internal server error.' })
     }
     return res.status(200).send(JSON.parse(data.toString()))
   })
@@ -22,12 +24,24 @@ app.get('/api/result', (req, res) => {
 
 app.post('/api/result', (req, res) => {
   const data = JSON.stringify(req.body)
-  fs.writeFile('./data/result.json', data, (err) => {
+  const filePath = `${__dirname}/../data/calculator.json`
+  const dirPath = path.dirname(filePath)
+
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdir(dirPath, (err) => {
+      if (err)
+        return res.status(500).send({ error: 'Could not create directory.' })
+    })
+  }
+
+  fs.writeFile(filePath, data, (err) => {
     if (err) {
-      console.log(err)
-      return res.status(500).send({ error: 'Internal server error. :(' })
+      if (err.code === 'ENOENT') {
+        return res.status(404).send({ error: 'No such file or directory.' })
+      }
+      return res.status(500).send({ error: 'Internal server error.' })
     }
-    return res.status(200).send({ message: 'Result successfuly saved. :)' })
+    return res.status(200).send({ message: 'Result successfuly saved.' })
   })
 })
 
