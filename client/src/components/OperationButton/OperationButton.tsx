@@ -1,12 +1,13 @@
-import { Action } from '../../state/reducer'
+import { useCalculatorContext } from '../../context/calculator'
 import './OperationButton.css'
 
 type Props = {
   operation: string
-  dispatch: React.Dispatch<Action>
 }
 
-const OperationButton = ({ operation, dispatch }: Props) => {
+const OperationButton = ({ operation }: Props) => {
+  const [, dispatch] = useCalculatorContext()
+
   const handleOperation = () => {
     switch (operation) {
       case 'C':

@@ -1,12 +1,13 @@
-import { Action } from '../../state/reducer'
+import { useCalculatorContext } from '../../context/calculator'
 import './DigitButton.css'
 
 type Props = {
   digit: string
-  dispatch: React.Dispatch<Action>
 }
 
-const DigitButton = ({ digit, dispatch }: Props) => {
+const DigitButton = ({ digit }: Props) => {
+  const [, dispatch] = useCalculatorContext()
+
   return (
     <button
       className="digit-button"
