@@ -1,48 +1,64 @@
-import { useReducer } from 'react'
-import { reducer } from './state/reducer'
+import { Calculator, useCalculatorContext } from './context/calculator'
 import DigitButton from './components/DigitButton/DigitButton'
 import OperationButton from './components/OperationButton/OperationButton'
+import ServerButton from './components/ServerButton/ServerButton'
 import './App.css'
 
 const App = () => {
-  const [{ operation, currNumber, prevNumber }, dispatch] = useReducer(
-    reducer,
-    {
-      operation: '',
-      currNumber: '',
-      prevNumber: '',
+  const [{ operation, currNumber, prevNumber }, dispatch] =
+    useCalculatorContext()
+
+  const getResult = async () => {
+    const response = await fetch('api/result')
+    const data = (await response.json()) as Calculator
+    dispatch({ type: 'LOAD_DATA', payload: { calculator: data } })
+  }
+
+  const postResult = async () => {
+    if (operation === '' && currNumber === '' && prevNumber === '') {
+      return
     }
-  )
+
+    await fetch('api/result', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ operation, currNumber, prevNumber }),
+    })
+  }
 
   return (
     <div className="calculator-container">
       <div className="output">
-        <div className="prev-operand">
+        <div className="prev-number">
           {prevNumber} {operation}
         </div>
-        <div className="operand">{currNumber}</div>
+        <div className="curr-number">{currNumber}</div>
       </div>
       <div className="grid-container">
-        <OperationButton operation="C" dispatch={dispatch} />
-        <OperationButton operation="%" dispatch={dispatch} />
-        <OperationButton operation="DEL" dispatch={dispatch} />
-        <OperationButton operation="÷" dispatch={dispatch} />
-        <DigitButton digit="7" dispatch={dispatch} />
-        <DigitButton digit="8" dispatch={dispatch} />
-        <DigitButton digit="9" dispatch={dispatch} />
-        <OperationButton operation="x" dispatch={dispatch} />
-        <DigitButton digit="6" dispatch={dispatch} />
-        <DigitButton digit="5" dispatch={dispatch} />
-        <DigitButton digit="4" dispatch={dispatch} />
-        <OperationButton operation="+" dispatch={dispatch} />
-        <DigitButton digit="3" dispatch={dispatch} />
-        <DigitButton digit="2" dispatch={dispatch} />
-        <DigitButton digit="1" dispatch={dispatch} />
-        <OperationButton operation="-" dispatch={dispatch} />
-        <DigitButton digit="00" dispatch={dispatch} />
-        <DigitButton digit="0" dispatch={dispatch} />
-        <DigitButton digit="." dispatch={dispatch} />
-        <OperationButton operation="=" dispatch={dispatch} />
+        <OperationButton operation="C" />
+        <OperationButton operation="%" />
+        <OperationButton operation="DEL" />
+        <OperationButton operation="÷" />
+        <DigitButton digit="7" />
+        <DigitButton digit="8" />
+        <DigitButton digit="9" />
+        <OperationButton operation="x" />
+        <DigitButton digit="6" />
+        <DigitButton digit="5" />
+        <DigitButton digit="4" />
+        <OperationButton operation="+" />
+        <DigitButton digit="3" />
+        <DigitButton digit="2" />
+        <DigitButton digit="1" />
+        <OperationButton operation="-" />
+        <DigitButton digit="00" />
+        <DigitButton digit="0" />
+        <DigitButton digit="." />
+        <OperationButton operation="=" />
+        <ServerButton label="Save Result" onClick={postResult} />
+        <ServerButton label="Load Result" onClick={getResult} />
       </div>
     </div>
   )

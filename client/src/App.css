@@ -11,7 +11,7 @@
   flex-direction: column;
 }
 
-.prev-operand {
+.prev-number {
   min-height: 2rem;
   color: #cecece;
   font-size: 1.4rem;
@@ -19,7 +19,7 @@
   text-align: right;
 }
 
-.operand {
+.curr-number {
   min-height: 3rem;
   font-size: 2rem;
   font-weight: 700;
