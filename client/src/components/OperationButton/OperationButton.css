@@ -1,0 +1,27 @@
+.operation-button {
+  height: 3rem;
+  width: 3rem;
+  border: none;
+  border-radius: 50%;
+  color: #ffffff;
+  background-color: #797979;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.125rem;
+  transition: transform 100ms ease-in;
+}
+
+.operation-button.equal {
+  background-color: #ff9430;
+}
+
+.operation-button.equal:hover {
+  background-color: #c96624;
+}
+
+.operation-button:hover {
+  background-color: #616161;
+  cursor: pointer;
+}
+.operation-button:active {
+  transform: scale(0.9);
+}

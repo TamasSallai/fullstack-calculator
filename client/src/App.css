@@ -1,0 +1,38 @@
+.calculator-container {
+  width: 14rem;
+  margin: auto;
+  margin-top: 10rem;
+}
+
+.output {
+  min-height: 5rem;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.prev-number {
+  min-height: 2rem;
+  color: #cecece;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: right;
+  line-break: normal;
+  overflow-wrap: break-word;
+}
+
+.curr-number {
+  min-height: 3rem;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: right;
+  line-break: normal;
+  overflow-wrap: break-word;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 3rem);
+  justify-content: center;
+  gap: 0.6rem;
+}

@@ -1,0 +1,19 @@
+.digit-button {
+  height: 3rem;
+  width: 3rem;
+  border: none;
+  border-radius: 50%;
+  color: #ffffff;
+  background-color: #3b3b3b;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.125rem;
+  transition: transform 100ms ease-in;
+}
+
+.digit-button:hover {
+  background-color: #444444;
+  cursor: pointer;
+}
+.digit-button:active {
+  transform: scale(0.9);
+}

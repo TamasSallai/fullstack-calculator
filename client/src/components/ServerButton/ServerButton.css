@@ -1,0 +1,20 @@
+.server-button {
+  height: 3rem;
+  grid-column: span 4;
+  border: none;
+  border-radius: 25px;
+  background-color: #ff9430;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: transform 100ms ease-in;
+  cursor: pointer;
+}
+
+.server-button:hover {
+  background-color: #c96624;
+}
+
+.server-button:active {
+  transform: scale(0.9);
+}
