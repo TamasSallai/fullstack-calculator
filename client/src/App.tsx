@@ -8,24 +8,43 @@ const App = () => {
   const [{ operation, currNumber, prevNumber }, dispatch] =
     useCalculatorContext()
 
-  const getResult = async () => {
-    const response = await fetch('api/result')
-    const data = (await response.json()) as Calculator
-    dispatch({ type: 'LOAD_DATA', payload: { calculator: data } })
+  const getCalculatorState = async () => {
+    try {
+      const response = await fetch('api/result')
+
+      if (!response.ok) {
+        throw new Error(`Status: ${response.status}, request failed.`)
+      }
+
+      //data state should be type guarded or parsed to state type instead of assertion
+      const data = (await response.json()) as Calculator
+
+      dispatch({ type: 'LOAD_DATA', payload: { calculator: data } })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  const postResult = async () => {
+  const postCalculatorState = async () => {
     if (operation === '' && currNumber === '' && prevNumber === '') {
       return
     }
 
-    await fetch('api/result', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ operation, currNumber, prevNumber }),
-    })
+    try {
+      const response = await fetch('api/result', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ operation, currNumber, prevNumber }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`Status: ${response.status}, request failed.`)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -57,8 +76,8 @@ const App = () => {
         <DigitButton digit="0" />
         <DigitButton digit="." />
         <OperationButton operation="=" />
-        <ServerButton label="Save Result" onClick={postResult} />
-        <ServerButton label="Load Result" onClick={getResult} />
+        <ServerButton label="Save Result" onClick={postCalculatorState} />
+        <ServerButton label="Load Result" onClick={getCalculatorState} />
       </div>
     </div>
   )
