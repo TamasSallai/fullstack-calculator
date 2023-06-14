@@ -17,6 +17,8 @@
   font-size: 1.4rem;
   font-weight: 700;
   text-align: right;
+  line-break: normal;
+  overflow-wrap: break-word;
 }
 
 .curr-number {
